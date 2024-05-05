@@ -33,7 +33,7 @@ def get_historic_data(api_key, stocks):
     df.astype({"Company": 'category', "Stock": 'category', 'Day': 'datetime64[ns]', 'Open Price': 'float', 'High': 'float', 'Low': 'float', 'Close': 'float', 'Volume': 'int' })
     print(df.dtypes)
     return df
-#ddd
+
 cc = get_historic_data(api_key,stocks)
 
 print(cc)
