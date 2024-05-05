@@ -34,7 +34,6 @@ def get_historic_data(api_key, stocks):
     print(df.dtypes)
     return df
 
-
 cc = get_historic_data(api_key,stocks)
 
 print(cc)
