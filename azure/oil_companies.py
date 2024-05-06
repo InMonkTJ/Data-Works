@@ -8,7 +8,7 @@ with open(path_to_file, "r") as file:
     config = yaml.safe_load(file)
 
 api_key = config["Api"]["Alphavantage"]
-stocks = config["Companies"]["Names"]
+stocks = config["Companies_bulk"]["Names"]
 
 
 def get_historic_data(api_key, stocks):
