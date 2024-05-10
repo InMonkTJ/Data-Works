@@ -2,8 +2,19 @@ import requests
 import pandas as pd
 import yaml
 from to_sql import data_to_sql
+import argparse
+import datetime
 
 path_to_file = "../lib/cc.yaml"
+
+def parse_date(date_string):
+    return datetime.datetime.strptime(date_string, "%d/%m/%Y")
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-s', '--startfrom', type=parse_date,  help= "where do you want to start from")
+parser.add_argument('-e', '--endto', type=parse_date, default=datetime.datetime.now(), help= "where do you want to end to")
+
+args = parser.parse_args()
 
 with open(path_to_file, "r") as file:
     config = yaml.safe_load(file)
@@ -13,7 +24,7 @@ api_key = config["Api"]["Alphavantage"]
 stocks = config["Companies_bulk"]["Names"]
 
 
-def get_historic_data(api_key, stocks):
+def get_historic_data(api_key, stocks, args):
     all_rows = []
     for company_names, stock in stocks.items(): #Iterate over each company
         req = requests.get('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={}&apikey={}&outputsize=full'.format(stock, api_key)) #Api connection url
@@ -32,14 +43,15 @@ def get_historic_data(api_key, stocks):
                     }
             all_rows.append(day_row)
     df = pd.DataFrame(all_rows)
+
     #Change the datatype of the columns
     
     df.astype({"company": 'category', "stock": 'category', 'trading_day': 'datetime64[ns]', 'open_price': 'float', 'high_price': 'float', 'low_price': 'float', 'close_price': 'float', 'volume': 'int' })
     
-    #Import to the database
+
     data_to_sql(df)
     
 
-get_historic_data(api_key,stocks)
+get_historic_data(api_key,stocks, args)
 
 
