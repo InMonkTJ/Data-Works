@@ -44,14 +44,18 @@ def get_historic_data(api_key, stocks, args):
             all_rows.append(day_row)
     df = pd.DataFrame(all_rows)
 
-    #Change the datatype of the columns
-    
-    df.astype({"company": 'category', "stock": 'category', 'trading_day': 'datetime64[ns]', 'open_price': 'float', 'high_price': 'float', 'low_price': 'float', 'close_price': 'float', 'volume': 'int' })
-    
+    # Convert 'trading_day' to datetime for accurate filtering and comparison
+    df['trading_day'] = pd.to_datetime(df['trading_day'])
 
+    if args.startfrom:
+        df = df[(df['trading_day'] >= args.startfrom) & (df['trading_day'] <= args.endto)]
+
+    # Change the datatype of the columns and ensure the change is applied
+    df = df.astype({"company": 'category', "stock": 'category', 'open_price': 'float', 'high_price': 'float', 'low_price': 'float', 'close_price': 'float', 'volume': 'int'})
+    
+    # Import to the database
     data_to_sql(df)
-    
 
-get_historic_data(api_key,stocks, args)
+get_historic_data(api_key, stocks, args)
 
 
