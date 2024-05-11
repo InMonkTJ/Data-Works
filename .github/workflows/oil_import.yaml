@@ -2,7 +2,7 @@ name: Daily oil import
 
 on:
   schedule:
-    - cron: '23 15 * * *'  # Scheduled to run at 14:50 UTC every day
+    - cron: '37 15 * * *'
 
 jobs:
   populate-database:
@@ -25,13 +25,6 @@ jobs:
         pip install pyodbc
         pip install pyyaml
 
-    - name: Change to the azure directory
-      run: cd azure
-      
     - name: Run the script
+      working-directory: ./azure
       run: python oil_companies_import.py
-
-      
-
-
-
