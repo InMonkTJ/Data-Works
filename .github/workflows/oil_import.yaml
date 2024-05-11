@@ -1,0 +1,32 @@
+name: Daily oil import
+
+on:
+  schedule:
+    - cron: '40 14 * * *'
+
+jobs:
+  populate-database:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the repo
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.12.3'  
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install sqlalchemy
+        pip install requests
+        pip install pyodbc
+        pip install pyyaml
+
+    - name: Run the script
+      run: oil_companies_import.py
+
+
+
