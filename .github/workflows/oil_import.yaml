@@ -2,7 +2,7 @@ name: Daily oil import
 
 on:
   schedule:
-    - cron: '37 15 * * *'
+    - cron: '52 15 * * *'
 
 jobs:
   populate-database:
@@ -24,6 +24,7 @@ jobs:
         pip install requests
         pip install pyodbc
         pip install pyyaml
+        pip install pandas
 
     - name: Run the script
       working-directory: ./azure
