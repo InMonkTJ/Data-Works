@@ -11,7 +11,7 @@ def parse_date(date_string):
     return datetime.datetime.strptime(date_string, "%d/%m/%Y")
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-s', '--startfrom', type=parse_date,  help= "where do you want to start from")
+parser.add_argument('-s', '--startfrom', type=parse_date, default=datetime.datetime.now() - datetime.timedelta(days=2), help= "where do you want to start from")
 parser.add_argument('-e', '--endto', type=parse_date, default=datetime.datetime.now(), help= "where do you want to end to")
 
 args = parser.parse_args()
