@@ -2,7 +2,7 @@ name: Daily oil import
 
 on:
   schedule:
-    - cron: '26 15 * * *'
+    - cron: '45 15 * * *'
 
 jobs:
   populate-database:
