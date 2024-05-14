@@ -16,8 +16,9 @@ password = db_config['password']
 driver = db_config['driver']
 
 connection = (
-    f"mssql+pyodbc://{username}:{password}@{db_config['server']}/{db_config['database']}?driver={driver}"
+    f"mssql+pyodbc://{username}:{password}@{db_config['server']}/{db_config['database']}?driver={driver}&Command Timeout=60"
 )
+
 
 def data_to_sql(data):
     engine = create_engine(connection, echo=True)
