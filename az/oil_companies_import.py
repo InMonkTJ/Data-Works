@@ -4,6 +4,8 @@ import yaml
 from to_sql import data_to_sql
 import argparse
 import datetime
+import logging
+import azure.functions as func
 
 path_to_file = "../lib/cc.yaml"
 
@@ -55,6 +57,18 @@ def get_historic_data(api_key, stocks, args):
     
     # Import to the database
     data_to_sql(df)
+    
+
+
+app = func.FunctionApp()
+
+@app.schedule(schedule="*/5 * * * * *", arg_name="myTimer", run_on_startup=True,
+              use_monitor=False) 
+def timer_trigger(myTimer: func.TimerRequest) -> None:
+    if myTimer.past_due:
+        logging.info('The timer is past due!')
+
+    logging.info('Python timer trigger function executed.')
 
 get_historic_data(api_key, stocks, args)
 
