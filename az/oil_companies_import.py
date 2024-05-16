@@ -1,7 +1,7 @@
 import requests
 import pandas as pd
 import yaml
-from to_sql import data_to_sql
+from dd import data_to_sql
 import argparse
 import datetime
 

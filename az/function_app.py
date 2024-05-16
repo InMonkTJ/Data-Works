@@ -3,9 +3,12 @@ import azure.functions as func
 import requests
 import pandas as pd
 import yaml
-from dd import data_to_sql
+from to_sql import data_to_sql
 import datetime
+import os
 
+# Determine the path to the cc.yaml file
+path_to_file = os.path.join(os.path.dirname(__file__), '..', 'shared', 'cc.yaml')
 
 def parse_date(date_string):
     return datetime.datetime.strptime(date_string, "%d/%m/%Y")
@@ -14,14 +17,12 @@ def parse_date(date_string):
 start_date = datetime.datetime.now() - datetime.timedelta(days=2)
 end_date = datetime.datetime.now()
 
+with open(path_to_file, "r") as file:
+    config = yaml.safe_load(file)
 
-
-api_key = 'GNRD8ASXGY3VBTJY'
-stocks = {
-          "Chevron Corporation" : "CVX",
-          "ExxonMobil" : "XOM",
-          "Shell plc" : "SHEL"
-          }
+# Get the API key and the stocks to bulk import
+api_key = config["Api"]["Alphavantage"]
+stocks = config["Companies_bulk"]["Names"]
 
 def get_historic_data(api_key, stocks, start_date, end_date):
     all_rows = []
@@ -63,6 +64,10 @@ def get_historic_data(api_key, stocks, start_date, end_date):
 
     data_to_sql(df)
 
+app = func.FunctionApp()
+
+@app.function_name(name="TimerTrigger1")
+@app.schedule(schedule="0 */5 * * * *", arg_name="myTimer", run_on_startup=True, use_monitor=False)
 def main(mytimer: func.TimerRequest) -> None:
     if mytimer.past_due:
         logging.info('The timer is past due!')
