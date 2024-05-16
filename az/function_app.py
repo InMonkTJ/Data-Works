@@ -46,8 +46,8 @@ def get_historic_data(api_key, stocks):
 
     startfrom_str = "12/05/2024"
     endto_str = "14/05/2024"
-    startfrom = datetime.strptime(startfrom_str, "%d/%m/%Y")
-    endto = datetime.strptime(endto_str, "%d/%m/%Y")
+    startfrom = datetime.datetime.strptime(startfrom_str, "%d/%m/%Y")
+    endto = datetime.datetime.strptime(endto_str, "%d/%m/%Y")
     df = df[(df['trading_day'] >= startfrom) & (df['trading_day'] <= endto)]
 
     # Change the datatype of the columns and ensure the change is applied
