@@ -21,7 +21,7 @@ stocks = {
           }
 
 
-def get_historic_data(api_key, stocks, args):
+def get_historic_data(api_key, stocks):
     all_rows = []
     for company_names, stock in stocks.items(): #Iterate over each company
         req = requests.get('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={}&apikey={}&outputsize=full'.format(stock, api_key)) #Api connection url
