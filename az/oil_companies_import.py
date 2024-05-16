@@ -58,7 +58,7 @@ def get_historic_data(api_key, stocks, args):
     # Import to the database
     data_to_sql(df)
     
-
+get_historic_data(api_key, stocks, args)
 
 
 
