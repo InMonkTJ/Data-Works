@@ -6,4 +6,4 @@ azure-functions
 requests
 pandas
 pyyaml
-to_sql
+
