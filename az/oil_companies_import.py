@@ -5,8 +5,7 @@ from to_sql import data_to_sql
 import argparse
 import datetime
 
-
-
+path_to_file = "../lib/cc.yaml"
 
 def parse_date(date_string):
     return datetime.datetime.strptime(date_string, "%d/%m/%Y")
@@ -17,14 +16,12 @@ parser.add_argument('-e', '--endto', type=parse_date, default=datetime.datetime.
 
 args = parser.parse_args()
 
+with open(path_to_file, "r") as file:
+    config = yaml.safe_load(file)
 
 # Get the api key and the stocks to bulk import
-api_key = 'GNRD8ASXGY3VBTJY'
-stocks = {
-          "Chevron Corporation" : "CVX",
-          "ExxonMobil" : "XOM",
-          "Shell plc" : "SHEL"
-          }
+api_key = config["Api"]["Alphavantage"]
+stocks = config["Companies_bulk"]["Names"]
 
 
 def get_historic_data(api_key, stocks, args):
@@ -58,10 +55,5 @@ def get_historic_data(api_key, stocks, args):
     
     # Import to the database
     data_to_sql(df)
-    
 
-
-
-
-
-
+get_historic_data(api_key, stocks, args)
