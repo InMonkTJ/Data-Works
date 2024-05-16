@@ -19,7 +19,7 @@ stocks = {
 
 def data_to_sql(data):
     connection = (
-        "mssql+pyodbc://theboy:ovoxo123@conf.database.windows.net/sen-data?"
+        "mssql+pyodbc://theboy:ovoxo123/@conf.database.windows.net/sen-data?"
         "driver=ODBC Driver 17 for SQL Server&Command Timeout=120&connect_timeout=600"
     )
     engine = create_engine(connection, echo=True)
