@@ -83,5 +83,7 @@ app = func.FunctionApp()
 def timer_trigger(myTimer: func.TimerRequest) -> None:
     if myTimer.past_due:
         logging.info('The timer is past due!')
+    
+    get_historic_data(api_key, stocks)
 
     logging.info('Python timer trigger function executed.')
