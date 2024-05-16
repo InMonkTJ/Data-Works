@@ -10,7 +10,7 @@ import pandas as pd
 import yaml
 
 # Get the API key and the stocks to bulk import
-api_key = 'HA2L8ODLDJL15IXH'
+api_key = 'YTDGAFMR1QKANQXH'
 stocks = {
     "Chevron Corporation": "CVX",
     "ExxonMobil": "XOM",
