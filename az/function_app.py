@@ -3,10 +3,9 @@ import azure.functions as func
 import requests
 import pandas as pd
 import yaml
-from to_sql import data_to_sql
+from dd import data_to_sql
 import datetime
 
-path_to_file = "shared/cc.yaml"
 
 def parse_date(date_string):
     return datetime.datetime.strptime(date_string, "%d/%m/%Y")
@@ -15,12 +14,14 @@ def parse_date(date_string):
 start_date = datetime.datetime.now() - datetime.timedelta(days=2)
 end_date = datetime.datetime.now()
 
-with open(path_to_file, "r") as file:
-    config = yaml.safe_load(file)
 
-# Get the API key and the stocks to bulk import
-api_key = config["Api"]["Alphavantage"]
-stocks = config["Companies_bulk"]["Names"]
+
+api_key = 'GNRD8ASXGY3VBTJY'
+stocks = {
+          "Chevron Corporation" : "CVX",
+          "ExxonMobil" : "XOM",
+          "Shell plc" : "SHEL"
+          }
 
 def get_historic_data(api_key, stocks, start_date, end_date):
     all_rows = []
