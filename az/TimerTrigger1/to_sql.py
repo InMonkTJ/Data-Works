@@ -4,7 +4,7 @@ import yaml
 import os
 
 
-path_to_file = os.path.join(os.path.dirname(__file__), 'cc.yaml')
+path_to_file = os.path.join(os.path.dirname(__file__), 'dd.yaml')
 
 with open(path_to_file, "r") as file:
     config = yaml.safe_load(file)
