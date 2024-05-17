@@ -5,5 +5,5 @@
 azure-functions
 requests
 pandas
-yaml
+pyyaml
 sqlalchemy
