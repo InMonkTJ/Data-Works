@@ -3,9 +3,7 @@ import pandas as pd
 import yaml
 
 
-path_to_file = "../lib/cc.yaml"
-
-with open(path_to_file, "r") as file:
+with open('TimerTrigger1/dd.yaml', "r") as file:
     config = yaml.safe_load(file)
 
 
