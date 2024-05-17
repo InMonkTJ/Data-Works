@@ -8,9 +8,9 @@ from to_sql import data_to_sql
 import os
 
 
-path_to_file =  os.path.join(os.path.dirname(__file__), 'dd.yaml')
 
-with open(path_to_file, "r") as file:
+
+with open('TimerTrigger1/dd.yaml', "r") as file:
     config = yaml.safe_load(file)
 
 # Get the api key and the stocks to bulk import
