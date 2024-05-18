@@ -7,4 +7,4 @@ requests
 pandas
 pyyaml
 sqlalchemy
-pyodbc
+pymssql
