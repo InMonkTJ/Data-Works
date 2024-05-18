@@ -18,7 +18,7 @@ api_key = config["Api"]["Alphavantage"]
 stocks = config["Companies_bulk"]["Names"]
 
 
-def get_historic_data(api_key, stocks):
+def get_historic_data(api_key, stocks, n, to_start = None, to_end=None):
     all_rows = []
     for company_names, stock in stocks.items(): #Iterate over each company
         req = requests.get('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={}&apikey={}&outputsize=full'.format(stock, api_key)) #Api connection url
@@ -64,4 +64,28 @@ def main(mytimer: func.TimerRequest) -> None:
         logging.info('The timer is past due!')
 
     logging.info('Python timer trigger function ran at %s', utc_timestamp)
-    get_historic_data(api_key, stocks)
+    n = 1
+    get_historic_data(api_key, stocks, n)
+
+if __name__ == '__main__':
+    import argparse
+    n = 0
+    
+    path_to_file = '../dd.yaml'
+    
+    with open(path_to_file, 'r') as file:
+        config = yaml.safe_load(file)
+    
+    api_key = config["Api"]["Alphavantage"]
+    stocks = config["Companies_bulk"]["Names"]
+    
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-s', '--startfrom', default=datetime.datetime.now() - datetime.timedelta(days=2), help= "where do you want to start from")
+    parser.add_argument('-e', '--endto',  default=datetime.datetime.now(), help= "where do you want to end to")
+
+    args = parser.parse_args()
+    
+    to_start = datetime.datetime.strptime(args.startfrom, "%d/%m/%Y")
+    to_end = datetime.datetime.strptime(args.endto, "%d/%m/%Y")
+    
+    get_historic_data(api_key, stocks,n, to_start, to_end)
