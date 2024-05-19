@@ -4,13 +4,20 @@ import azure.functions as func
 import requests
 import pandas as pd
 import yaml
-from to_sql import get_conn_info
 import os
 from dotenv import load_dotenv
+import sys
 
 
 
 def get_historic_data(api_key, stocks, n, to_start = None, to_end=None):
+    
+    if n == 0:
+        sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+        from to_sql import get_conn_info
+        
+    else:
+        from to_sql import get_conn_info
     
     if to_end is None:
         to_end = datetime.datetime.now()

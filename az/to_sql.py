@@ -4,14 +4,6 @@ import yaml
 import os
 from dotenv import load_dotenv
 
-def details(config):
-    load_dotenv()
-    db_config = config['Sql_connections']['sen_data']
-    username = db_config['username']
-    password = db_config['password']
-    server = db_config['server']
-    database = db_config['database']
-    return username, password, server, database
 
 def get_conn_info(data, n):
     if n == 0:  
