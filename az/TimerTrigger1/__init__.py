@@ -6,6 +6,7 @@ import pandas as pd
 import yaml
 from to_sql import get_conn_info
 import os
+from dotenv import load_dotenv
 
 
 
@@ -56,16 +57,18 @@ def main(mytimer: func.TimerRequest) -> None:
     with open('TimerTrigger1/dd.yaml', "r") as file:
         config = yaml.safe_load(file)
     
-    api_key, stocks = get_keys(config)
+    stocks = get_keys(config)
+    
+    load_dotenv('TimerTrigger1/.env')
+    api_key = os.getenv('ALPHAVANTAGE_API_KEY')
+    
     get_historic_data(api_key, stocks, n)
     
     
     
 def get_keys(config):
-    api_key = config["Api"]["Alphavantage"]
     stocks = config["Companies_bulk"]["Names"]
-    return api_key, stocks
-
+    return stocks
 
 
 if __name__ == '__main__':
@@ -77,7 +80,10 @@ if __name__ == '__main__':
     with open(path_to_file, 'r') as file:
         config = yaml.safe_load(file)
     
-    api_key, stocks = get_keys(config)
+    stocks = get_keys(config)
+    
+    load_dotenv()
+    api_key = os.getenv('ALPHAVANTAGE_API_KEY')
 
     def parse_date(date_string):
         return datetime.datetime.strptime(date_string, "%d/%m/%Y")

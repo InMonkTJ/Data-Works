@@ -2,8 +2,10 @@ from sqlalchemy import create_engine
 import pandas as pd
 import yaml
 import os
+from dotenv import load_dotenv
 
 def details(config):
+    load_dotenv()
     db_config = config['Sql_connections']['sen_data']
     username = db_config['username']
     password = db_config['password']
@@ -13,20 +15,15 @@ def details(config):
 
 def get_conn_info(data, n):
     if n == 0:  
-        config_path = 'dd.yaml'
+        load_dotenv()
     else:
-        config_path = 'TimerTrigger1/dd.yaml'
+        load_dotenv('TimerTrigger1/.env')
+        
+    username = os.getenv('SEN_DATA_USERNAME')
+    password = os.getenv('SEN_DATA_PASSWORD')
+    server = os.getenv('SEN_DATA_SERVER')
+    database = os.getenv('SEN_DATA_DATABASE')
 
-    try:
-        with open(config_path, 'r') as file:
-            config = yaml.safe_load(file)
-    except FileNotFoundError:
-        raise FileNotFoundError(f"Configuration file not found: {config_path}")
-    except yaml.YAMLError as e:
-        raise RuntimeError(f"Error parsing YAML file: {e}")
-
-    # Get database connection details
-    username, password, server, database = details(config)
     connection_string = f"mssql+pymssql://{username}:{password}@{server}/{database}?timeout=600"
 
     # Create the SQLAlchemy engine
