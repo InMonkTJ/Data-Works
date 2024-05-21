@@ -22,7 +22,7 @@ def get_historic_data(api_key, stocks, n, to_start = None, to_end=None):
     if to_end is None:
         to_end = datetime.datetime.now()
     if to_start is None:
-        to_start = to_end - datetime.timedelta(days=2)
+        to_start = to_end - datetime.timedelta(days=1)
     
     all_rows = []
     for company_names, stock in stocks.items(): 
