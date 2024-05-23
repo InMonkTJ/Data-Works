@@ -3,6 +3,7 @@ import pandas as pd
 import yaml
 import os
 from dotenv import load_dotenv
+from pymssql import OperationalError
 
 
 def get_conn_info(data, n):
@@ -27,9 +28,18 @@ def get_conn_info(data, n):
     # Load data to SQL
     data_to_sql(data, engine)
 
-def data_to_sql(data, engine):
+def data_to_sql(data, engine, retries=4):
     df = pd.DataFrame(data)
-    try:
-        df.to_sql("stocks", con=engine, index=False, if_exists='append')
-    except Exception as e:
-        raise RuntimeError(f"Error writing data to SQL: {e}")
+    attempt = 0
+    while attempt < retries:
+        try:
+            df.to_sql("stocks", con=engine, index=False, if_exists='append')
+            print("Data written to SQL successfully")
+            return
+        except OperationalError as e:
+            attempt += 1
+            if attempt >= retries:
+                raise RuntimeError(f"Error writing data to SQL after {retries} attempts: {e}")
+            print(f"Retry {attempt}/{retries} due to OperationalError: {e}")
+        except Exception as e:
+            raise RuntimeError(f"Error writing data to SQL: {e}")
