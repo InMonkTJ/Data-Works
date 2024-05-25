@@ -51,7 +51,7 @@ def get_historic_data(api_key, stocks, n, to_start = None, to_end=None):
     get_conn_info(df, n)
 
 
-def main(mytimer: func.TimerRequest) -> None:
+def main(mytimer: func.TimerRequest, context: func.Context) -> None:
     utc_timestamp = datetime.datetime.utcnow().replace(
         tzinfo=datetime.timezone.utc).isoformat()
 
@@ -59,6 +59,11 @@ def main(mytimer: func.TimerRequest) -> None:
         logging.info('The timer is past due!')
 
     logging.info('Python timer trigger function ran at %s', utc_timestamp)
+    
+    if context.retry_context.retry_count == context.retry_context.max_retry_count:
+        logging.warn(f"Max retries of {context.retry_context.max_retry_count} for "
+            f"function {context.function_name} has been reached")
+    
     n = 1
     
     with open('TimerTrigger1/dd.yaml', "r") as file:
