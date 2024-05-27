@@ -1,28 +1,18 @@
 Companies_bulk:
-  Names: {
-          "Chevron Corporation" : "CVX",
+    Names: {
           "ExxonMobil Corporation" : "XOM",
-          "ConocoPhillips" : "COP",
-          "Marathon Petroleum Corporation" : "MPC",
-          "Valero Energy Corporation" : "VLO",
-          "EOG Resources, Inc." : "EOG",
+          "Chevron Corporation" : "CVX",
           "Phillips 66" : "PSX",
-          "Hess Corporation" : "HES",
+          "Valero Energy Corporation" : "VLO",
+          "Marathon Petroleum Corporation" : "MPC",
+          "ConocoPhillips" : "COP",
           "Occidental Petroleum Corporation" : "OXY",
-          "Devon Energy Corporation" : "DVN",
           "Pioneer Natural Resources" : "PXD",
-          "Baker Hughes Company" : "BKR",
-          "Halliburton Company" : "HAL",
+          "EOG Resources, Inc." : "EOG",
           "Schlumberger Limited" : "SLB",
-          "APA Corporation" : "APA",
-          "Coterra Energy Inc." : "CTRA",
-          "Diamondback Energy, Inc." : "FANG",
-          "Murphy Oil Corporation" : "MUR",
-          "Targa Resources Corp." : "TRGP",
-          "Williams Companies, Inc." : "WMB",
-          "Kinder Morgan, Inc." : "KMI",
-          "ONEOK, Inc." : "OKE",
-          "Cheniere Energy, Inc." : "LNG",
+          "Baker Hughes Company" : "BKR",
           "HollyFrontier Corporation" : "HFC",
-          "Antero Resources Corporation" : "AR"
+          "Devon Energy Corporation" : "DVN",
+          "Targa Resources Corp." : "TRGP",
+          "ONEOK, Inc." : "OKE"
           }
