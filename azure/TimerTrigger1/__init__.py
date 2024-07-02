@@ -11,7 +11,10 @@ import sys
 
 
 def get_historic_data(api_key, stocks, n, to_start = None, to_end=None):
-    
+    #1.Connection to sql is imported.
+    #2.Daily trading data is retrived and turned into a list of dictionaries which is converted into a pandas DataFrame.
+    #3.Appropriate data types for each column are set.
+    #3.The data is then exported to the sql database.
     if n == 0:
         sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
         from to_sql import get_conn_info
@@ -52,6 +55,7 @@ def get_historic_data(api_key, stocks, n, to_start = None, to_end=None):
 
 
 def main(mytimer: func.TimerRequest, context: func.Context) -> None:
+    #If the script is run via azure functions, this python function is triggered.
     utc_timestamp = datetime.datetime.utcnow().replace(
         tzinfo=datetime.timezone.utc).isoformat()
 
@@ -84,7 +88,9 @@ def get_keys(config):
 
 
 if __name__ == '__main__':
+    #If the script is run locally, this python function is triggered.
     import argparse
+    #argparse is used to allow for data inputs in the command line arguments to retrieve data from and to specific dates.
     n = 0
     
     path_to_file = 'dd.yaml'

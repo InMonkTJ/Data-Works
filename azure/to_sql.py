@@ -31,15 +31,19 @@ def get_conn_info(data, n):
 def data_to_sql(data, engine, retries=4):
     df = pd.DataFrame(data)
     attempt = 0
+
     while attempt < retries:
         try:
             df.to_sql("stocks", con=engine, index=False, if_exists='append')
             print("Data written to SQL successfully")
             return
+        
         except OperationalError as e:
             attempt += 1
             if attempt >= retries:
                 raise RuntimeError(f"Error writing data to SQL after {retries} attempts: {e}")
+            
             print(f"Retry {attempt}/{retries} due to OperationalError: {e}")
+            
         except Exception as e:
             raise RuntimeError(f"Error writing data to SQL: {e}")
